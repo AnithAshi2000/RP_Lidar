@@ -1,0 +1,222 @@
+int BLE = 2;
+int BLD = 3;
+int BLB = 4;
+int FLE = 5;
+int FLD = 6;
+int FLB = 7;
+
+int FRB = 8;
+int FRD = 9;
+int FRE = 10;
+int BRB = 11;
+int BRD = 13;
+int BRE = 12;
+
+int lr = 17;
+int fb = 18;
+int rot = 20;
+int dig = 19;
+long FB, LR, ROT, DIG;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(FRB, OUTPUT);
+  pinMode(FRD, OUTPUT);
+  pinMode(FRE, OUTPUT);
+  pinMode(BRB, OUTPUT);
+  pinMode(BRD, OUTPUT);
+  pinMode(BRE, OUTPUT);
+  pinMode(FLB, OUTPUT);
+  pinMode(FLD, OUTPUT);
+  pinMode(FLE, OUTPUT);
+  pinMode(BLB, OUTPUT);
+  pinMode(BLD, OUTPUT);
+  pinMode(BLE, OUTPUT);
+  pinMode(fb, INPUT);
+  pinMode(lr, INPUT);
+  pinMode(rot, INPUT);
+  pinMode(dig, INPUT);
+  digitalWrite(FRB, LOW);
+  digitalWrite(FLB, LOW);
+  digitalWrite(BRB, LOW);
+  digitalWrite(BLB, LOW);
+  Serial.begin(9600);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+  FB = pulseIn(fb, HIGH);
+  LR = pulseIn(lr, HIGH);
+  ROT = pulseIn(rot, HIGH);
+  DIG = pulseIn(dig, HIGH);
+
+  Serial.print(" FB=");
+  Serial.print(FB);
+  Serial.print(" LR=");
+  Serial.print(LR);
+  Serial.print(" ROT=");
+  Serial.print(ROT);
+  Serial.print(" DIG=");
+  Serial.print(DIG);
+  if (FB < 850 && LR < 850)
+  {
+    delay(500);
+    digitalWrite(FRE, LOW);
+    digitalWrite(FLE, LOW);
+    digitalWrite(BRE, LOW);
+    digitalWrite(BLE, LOW);
+    Serial.println(" STOP");
+  }
+  else if (FB < 1350 && LR > 1350 && LR < 1650)
+  {
+    delay(500);
+    digitalWrite(FRD, LOW);
+    digitalWrite(FLD, HIGH);
+    digitalWrite(BRD, LOW);
+    digitalWrite(BLD, HIGH);
+
+    digitalWrite(FRE, HIGH);
+    digitalWrite(FLE, HIGH);
+    digitalWrite(BRE, HIGH);
+    digitalWrite(BLE, HIGH);
+    Serial.println(" FORWARD");
+  }
+  else if (FB > 1650 && LR > 1350 && LR < 1650)
+  {
+    delay(500);
+    digitalWrite(FRD, HIGH);
+    digitalWrite(FLD, LOW);
+    digitalWrite(BRD, HIGH);
+    digitalWrite(BLD, LOW);
+
+    digitalWrite(FRE, HIGH);
+    digitalWrite(FLE, HIGH);
+    digitalWrite(BRE, HIGH);
+    digitalWrite(BLE, HIGH);
+    Serial.println(" BACKWARD");
+  }
+  else if (LR < 1350 && FB > 1350 && FB < 1650)
+  {
+    delay(500);
+    digitalWrite(FRD, LOW);
+    digitalWrite(FLD, LOW);
+    digitalWrite(BRD, HIGH);
+    digitalWrite(BLD, HIGH);
+
+    digitalWrite(FRE, HIGH);
+    digitalWrite(FLE, HIGH);
+    digitalWrite(BRE, HIGH);
+    digitalWrite(BLE, HIGH);
+    Serial.println(" LEFT");
+  }
+  else if (LR > 1650 && FB > 1350 && FB < 1650)
+  {
+    delay(500);
+    digitalWrite(FRD, HIGH);
+    digitalWrite(FLD, HIGH);
+    digitalWrite(BRD, LOW);
+    digitalWrite(BLD, LOW);
+
+    digitalWrite(FRE, HIGH);
+    digitalWrite(FLE, HIGH);
+    digitalWrite(BRE, HIGH);
+    digitalWrite(BLE, HIGH);
+    Serial.println(" RIGHT");
+  }
+  else if (FB < 1350 && LR > 1650)
+  {
+    delay(500);
+    digitalWrite(FRD, HIGH);
+    digitalWrite(FLD, HIGH);
+    digitalWrite(BRD, LOW);
+    digitalWrite(BLD, LOW);
+
+    digitalWrite(FRE, LOW);
+    digitalWrite(FLE, HIGH);
+    digitalWrite(BRE, HIGH);
+    digitalWrite(BLE, LOW);
+    Serial.println(" 45 F RIGHT");
+  }
+  else if (FB > 1650 && LR < 1350)
+  {
+    delay(500);
+    digitalWrite(FRD, LOW);
+    digitalWrite(FLD, LOW);
+    digitalWrite(BRD, HIGH);
+    digitalWrite(BLD, HIGH);
+
+    digitalWrite(FRE, LOW);
+    digitalWrite(FLE, HIGH);
+    digitalWrite(BRE, HIGH);
+    digitalWrite(BLE, LOW);
+    Serial.println(" 45 B LEFT");
+  }
+  else if (FB > 1650 && LR > 1650)
+  {
+    delay(500);
+    digitalWrite(FRD, HIGH);
+    digitalWrite(FLD, HIGH);
+    digitalWrite(BRD, LOW);
+    digitalWrite(BLD, LOW);
+
+    digitalWrite(FRE, HIGH);
+    digitalWrite(FLE, LOW);
+    digitalWrite(BRE, LOW);
+    digitalWrite(BLE, HIGH);
+    Serial.println(" 45 F LEFT");
+  }
+  else if (FB < 1350 && LR < 1350)
+  {
+    delay(500);
+    digitalWrite(FRD, LOW);
+    digitalWrite(FLD, LOW);
+    digitalWrite(BRD, HIGH);
+    digitalWrite(BLD, HIGH);
+
+    digitalWrite(FRE, HIGH);
+    digitalWrite(FLE, LOW);
+    digitalWrite(BRE, LOW);
+    digitalWrite(BLE, HIGH);
+    Serial.println(" 45 B RIGHT");
+  }
+  else if (ROT < 1350)
+  {
+    delay(500);
+    digitalWrite(FRD, HIGH);
+    digitalWrite(FLD, HIGH);
+    digitalWrite(BRD, HIGH);
+    digitalWrite(BLD, HIGH);
+
+    digitalWrite(FRE, HIGH);
+    digitalWrite(FLE, HIGH);
+    digitalWrite(BRE, HIGH);
+    digitalWrite(BLE, HIGH);
+    Serial.println(" L TURN");
+  }
+  else if (ROT > 1650)
+  {
+    delay(500);
+    digitalWrite(FRD, LOW);
+    digitalWrite(FLD, LOW);
+    digitalWrite(BRD, LOW);
+    digitalWrite(BLD, LOW);
+
+    digitalWrite(FRE, HIGH);
+    digitalWrite(FLE, HIGH);
+    digitalWrite(BRE, HIGH);
+    digitalWrite(BLE, HIGH);
+    Serial.println(" R TURN");
+  }
+  else
+  {
+    delay(500);
+    digitalWrite(FRE, LOW);
+    digitalWrite(FLE, LOW);
+    digitalWrite(BRE, LOW);
+    digitalWrite(BLE, LOW);
+    Serial.println(" STOP");
+  }
+
+}
